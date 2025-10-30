@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Urbanist:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Simulation Results</h1>
+            <div class="result-details">
+                <!-- <p><strong>Simulator:</strong> {{ simulator }}</p>
+                <p><strong>Config File:</strong> {{ config_file }}</p>
+                <p><strong>Output Directory:</strong> {{ output_dir }}</p> -->
+            </div>
+            {% if visualizations %}
+                <h2>Visualizations</h2>
+                <div class="visualizations">
+                    {% for file in visualizations %}
+                        <div class="visualization">
+                            <img src="{{ url_for('static', filename='runs/' + run_name + '/' + file) }}" alt="{{ file}}">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="message info">No visualizations generated.</p>
+            {% endif %}
+            <h2>Download Data</h2>
+            <div class="downloads">
+            </div>
+            <a href="{{ url_for('intro') }}" class="back-link">Run Another</a>
+        </div>
+    </div>
+</body>
