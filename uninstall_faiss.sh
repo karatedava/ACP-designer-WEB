@@ -1,1 +1,0 @@
-pip uninstall faiss-cpu faiss-gpu faiss
