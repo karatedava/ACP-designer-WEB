@@ -13,15 +13,17 @@
             <h1>Simulation Results</h1>
             <div class="result-details">
                 <!-- <p><strong>Simulator:</strong> {{ simulator }}</p>
-                <p><strong>Config File:</strong> {{ config_file }}</p>
-                <p><strong>Output Directory:</strong> {{ output_dir }}</p> -->
+                <p><strong>Config File:</strong> {{ config_file }}</p> -->
+                <p><strong>Output Directory:</strong> {{ output_dir }}</p> 
             </div>
             {% if visualizations %}
                 <h2>Visualizations</h2>
                 <div class="visualizations">
                     {% for file in visualizations %}
                         <div class="visualization">
-                            <img src="{{ url_for('static', filename='runs/' + run_name + '/' + file) }}" alt="{{ file}}">
+                            <!-- <img src="{{ url_for('static', filename='runs/GENERATE/' + run_name + '/' + file) }}" alt="{{ file }}"> -->
+                             {% set clean_path = output_dir | replace('static/', '') %}
+                             <img src="{{ url_for('static', filename=clean_path ~ '/' ~ file) }}" alt="{{ file }}">
                         </div>
                     {% endfor %}
                 </div>
@@ -30,6 +32,9 @@
             {% endif %}
             <h2>Download Data</h2>
             <div class="downloads">
+                {% if results_file %}
+                    <p><a href="{{ url_for('download_file', filename=output_dir/results_file) }}" class="download-link">Download Results</a></p>
+                {% endif %}
             </div>
             <a href="{{ url_for('intro') }}" class="back-link">Run Another</a>
         </div>

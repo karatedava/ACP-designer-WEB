@@ -9,28 +9,32 @@ import numpy as np
 
 from pathlib import Path
 
-def probability_distribution(probabilities:np.ndarray, path:Path) -> None:
+def probability_distribution(probabilities:np.ndarray, path:Path, col:str='red', name:str='tox') -> None:
 
     """
     Plot probability distribution from predicted probabilities
     """
+    kde = False
+    if len(probabilities) >= 50:
+        kde = True
+
     sns.set(style="whitegrid")
 
     # Create a figure
     plt.figure(figsize=(8, 6))
 
     # Plot histogram with KDE
-    sns.histplot(probabilities, kde=True, color='red', alpha=0.6)
+    sns.histplot(probabilities, kde=kde, color=col, alpha=0.6)
 
     # Customize the plot
-    plt.title('Toxicity Distribution', fontsize=14, pad=10)
-    plt.xlabel('Toxicity', fontsize=12)
+    plt.title('Distribution', fontsize=14, pad=10)
+    plt.xlabel(name, fontsize=12)
     plt.ylabel('Count', fontsize=12)
     plt.xlim(0, 1)  # Probabilities are between 0 and 1
     plt.grid(True, alpha=0.3)
 
     # Show the plot
-    plt.savefig(path / 'distribution.png')
+    plt.savefig(path / f'distribution_{name}.png')
 
 
 def latent_space_plot(embedding_matrix, labels, path: Path, palette='bright', maxlen:int=10000) -> None:

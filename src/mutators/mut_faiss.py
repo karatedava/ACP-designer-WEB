@@ -3,6 +3,8 @@ import faiss
 import pandas as pd
 import numpy as np
 
+from sklearn.preprocessing import normalize
+
 class MutatorFaiss:
 
     def __init__(self, df:pd.DataFrame, vdb:np.ndarray=[], embedd_dim:int=100):
@@ -15,9 +17,11 @@ class MutatorFaiss:
             self.vdb = vdb
         else:
             self.vdb = self._construct_vectorDB_(embedd_dim)
+        self.vdb = normalize(self.vdb, norm='l2', axis=1).astype('float32')
         
         # init faiss indexer
 
+        #self.indexer = faiss.IndexFlatL2(embedd_dim)
         self.indexer = faiss.IndexFlatIP(embedd_dim)
         self.indexer.add(self.vdb)
     

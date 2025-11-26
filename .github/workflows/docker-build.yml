@@ -1,6 +1,5 @@
 name: Build and Push to CERIT.io
 
-# ← THIS WAS MISSING BEFORE! Triggers the workflow
 on:
   push:
     branches:

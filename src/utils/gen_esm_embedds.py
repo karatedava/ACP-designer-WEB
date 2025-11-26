@@ -15,7 +15,15 @@ class Embedder():
         self.model = model.half()
     
     @torch.no_grad
-    def get_embeddings(self, seqs:np.array, maxlen:int=50, bs:int = 4) -> np.array:
+    def get_embeddings(self, seqs:np.array, maxlen:int=50, bs:int = 0) -> np.array:
+        
+        if bs == 0:
+            if len(seqs) >= 1000:
+                bs=64
+            if len(seqs) >= 10000:
+                bs=128
+            else:
+                bs = 4
 
         embeddings = []
 
