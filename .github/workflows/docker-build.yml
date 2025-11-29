@@ -11,16 +11,24 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     steps:
-      # Optional: Cleanup to save disk space (especially useful on GitHub runners)
-      - name: Cleanup Docker system
+      - name: Free disk space
         run: |
-          docker system prune -af || true
-          docker volume prune -f || true
-          # These next lines are risky on GitHub runners and usually not needed
-          # sudo rm -rf /usr/share/dotnet || true
-          # sudo rm -rf /usr/local/lib/android || true
-          # sudo rm -rf /opt/ghc || true
+          echo "Initial disk usage:"
+          df -h
+
+          # Remove huge preinstalled stuff
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+
+          # Docker cleanup
+          docker system prune -af
+          docker builder prune -af
+
+          echo "After cleanup:"
+          df -h
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,7 +36,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to CERIT.io registry
+      - name: Login to CERIT.io
         uses: docker/login-action@v3
         with:
           registry: cerit.io
