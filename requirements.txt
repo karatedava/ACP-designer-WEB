@@ -1,4 +1,5 @@
-# conda 25.7.0 --> environment with python 3.12.11 and following packages:
+# Python 3.12.11 environment
+# Generated: 2026-01-03
 
 # Flask and Web Dependencies
 blinker==1.9.0
@@ -17,7 +18,8 @@ requests==2.32.5
 urllib3==2.5.0
 
 # Machine Learning and Data Processing
-faiss-cpu==1.12.0
+accelerate==1.12.0
+faiss-cpu==1.13.0
 filelock==3.19.1
 hf-xet==1.1.10
 huggingface-hub==0.35.0
@@ -46,17 +48,22 @@ matplotlib==3.10.6
 pyparsing==3.2.5
 seaborn==0.13.2
 
+# Data Handling
+et-xmlfile==2.0.0
+openpyxl==3.1.5
+pytz==2025.2
+
 # Utilities
 fsspec==2025.9.0
 mpmath==1.3.0
 networkx==3.5
 pillow==11.3.0
-python-dateutil==2.8.2
+python-dateutil==2.9.0
 PyYAML==6.0.2
 setuptools==80.9.0
-six==1.16.0
+six==1.17.0
 sympy==1.14.0
 threadpoolctl==3.6.0
-typing_extensions==4.11.0
+typing-extensions==4.12.2
 tzdata==2025.2
 wheel==0.45.1
