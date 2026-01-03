@@ -215,7 +215,7 @@ rng_state.pth
 scaler.pt
 trainer_state.json
 training_args.bin
-*.safetensors
+# *.safetensors
 .DS_Store
 
-# temporary
+db_prep.py
