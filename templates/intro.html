@@ -14,12 +14,13 @@
             <img src="{{ url_for('static', filename='graphics/RoVa_logo.png') }}" alt="RoVa logo">
             <!-- <img src="{{ url_for('static', filename='graphics/igem_brno_logo.png') }}" alt="iGEM BRNO Logo"> -->
         </div>
-        <h1 class="intro-title">Welcome to ACP designer</h1>
-        <div class="intro-subtitle">Toolbox for desing of novel therapeutic peptides, it features:
+        <h1 class="intro-title">Welcome to ACP Designer</h1>
+        <div class="intro-subtitle">
+            Toolbox for the design of novel therapeutic peptides. It features:
             <ul>
-                <li><strong>feature1:</strong></li>
-                <li><strong>feature2:</strong></li>
-                <li><strong>feature3:</strong></li>
+                <li><strong>Generative page:</strong> Design custom ACPs</li>
+                <li><strong>Mutation page:</strong> Generate mutants for specific ACPs</li>
+                <li><strong>Toxicity classification:</strong> Evaluate the potential toxicity against healthy cells</li>
             </ul>
         </div>
         <p>for more details refer to <a href="https://github.com/karatedava/ACP-designer">GitHub page</a>
@@ -32,7 +33,7 @@
             <h2>SELECTION MENU:</h2>
             <div class="simulation-option">
                 <h3>Peptide Generation</h3>
-                <p>Design of novel peptide therapeutics coupled with important propeties prediction</p>
+                <p>Design novel peptide sequences</p>
                 <a href="{{ url_for('generate') }}" class="button">GENERATE !</a>
             </div>
 
@@ -41,7 +42,7 @@
             <div class="simulation-option">
                 <h3>Peptide Mutation</h3>
                 <p>
-                    You have a promising sequence ? here you can create a enhanced mutants !
+                    Design mutants of promising sequence
                 </p>
                 <a href="{{ url_for('mutate') }}" class="button">MUTATE !</a>
             </div>

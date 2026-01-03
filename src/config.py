@@ -1,10 +1,12 @@
 from pathlib import Path
 
 FOLDER_SIGNATURE = 'designer_run_XX' # XX will be replaced by run_id
-OUTPUT_DIR = Path('static/runs/GENERATE/run_420')
+#OUTPUT_DIR = Path('static/runs/GENERATE/run_420')
+OUTPUT_DIR = Path('static/runs')
 DIRNAME_TEMPLATE = 'acp_maker'
 
 # path generative models
+GEN_PATH = Path('src/models/generative')
 GENGRU_PATH = Path('src/models/generative/peptide_generator_MP_FT.pt')
 
 # path filters

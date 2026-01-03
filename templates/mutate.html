@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACP designer - Web-based Implementation</title>
+    <title>ACP designer - Mutator page</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Urbanist:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
@@ -12,16 +12,21 @@
     <div class="container">
 
         <h1 class="intro-title">Peptide Mutator</h1>
-        <p class="intro-subtitle">general description TODO</p>
+        <p class="intro-subtitle">Page dedicated to mutant sampling.
+            Paste a protein you want to mutate below and select specific database
+            of generated peptides (from which mutants will be selected). Hit MUTATE and 
+            observe desingned mutatns with provided classification labels.
+        </p>
         <a href="{{ url_for('intro') }}" class="back-link">Back to Intro</a>
 
         <hr class="section-divider">
         <form method="POST" action="{{ url_for('mutate') }}">
 
         <div class="card">
+
             <div class="form-group">
                 <label for="sequence">Target Amino Acid Sequence</label>
-                <p class="text-muted">Paste or type the protein/peptide sequence you want to mutate (e.g., MKWVTFISLLFLFSSAYSRGVFRR)</p>
+                <p class="text-muted">Paste the protein/peptide sequence you want to mutate (e.g., MKWVTFISLLFLFSSAYSRGVFRR)</p>
                 
                 <!-- Textarea for AA sequence input -->
                 <textarea
@@ -37,6 +42,16 @@
                     Only standard amino acid letters (ACDEFGHIKLMNPQRSTVWY) are allowed.
                 </small>
             </div>
+
+            <div class="form-group">
+                <label for="database">database selection</label>
+                <select name="database" id="database" required>
+                    <option value="rnn_acp_mp">rnn_mp_db</option>
+                    <option value="progen-acp-mp">progen_mp_db</option>
+                    <!-- <option value="progen2-acp">progen_acp_db</option> -->
+                </select>
+            </div>
+
         </div>
         <hr class="section-divider">
         <button type="submit">MUTATE</button>

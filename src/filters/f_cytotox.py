@@ -25,7 +25,7 @@ class CytotoxicityFilter(Filter):
 
         """
         run cytotoxicity filtering
-        RETURN: pandas datafarme with added columns 'toxicity_prob', 'toxicity_cat'
+        RETURN: pandas datafarme with added columns 'toxicity_prob', 'toxicity_cat and embedded sequences'
         """
         sequences = self.preprocess_sequences(list(df['sequence'].to_numpy()))
         probabilities = np.array(self.model.predict_proba(sequences)[:,1], dtype=np.float32)
@@ -35,7 +35,7 @@ class CytotoxicityFilter(Filter):
         low, med = 0.5, 0.8
 
         df['toxicity_cat'] = np.select(
-            [df['toxicity_prob'] < low, 
+            [df['toxicity_prob'] < low,
             df['toxicity_prob'].between(low, med, inclusive='left'), 
             df['toxicity_prob'] >= med],
             ['LOW', 'MEDIUM', 'HIGH'],

@@ -10,14 +10,9 @@ import json
 
 class Generator(ABC):
 
-    def __init__(self, model_path:Path):
+    def __init__(self):
         super().__init__()
 
-        # load vocabulary
-        self.vocabulary = self._load_vocabulary_()
-        # load model
-        self.model = torch.load(model_path,weights_only=False)
-    
     @abstractmethod
     def generate_sequences(self) -> pd.DataFrame:
 
@@ -34,8 +29,3 @@ class Generator(ABC):
         - latent represetation used for visualization purposes
         RETURN: normalized embedding matrix
         """
-    
-    def _load_vocabulary_(self):
-
-        with open(VOCABULARY_FILE,'r') as f:
-            return ml.Vocabulary(json.load(f))

@@ -14,12 +14,12 @@ import json
 
 class DistributionFilter(Filter):
 
-    def __init__(self, og_data_path:Path):
+    def __init__(self, og_data_path:Path, charge_file:str = CHARGE_FILE, hydrophobicity_file:str=HYDROPHOBICITY_FILE):
 
         super().__init__()
 
-        self.charge_dict = json.load(open(CHARGE_FILE,'r'))
-        self.hydrophobicity_dict = json.load(open(HYDROPHOBICITY_FILE,'r'))
+        self.charge_dict = json.load(open(charge_file,'r'))
+        self.hydrophobicity_dict = json.load(open(hydrophobicity_file,'r'))
 
         df = pd.read_csv(og_data_path)
         self.base_charge_scores, self.base_hmom_scores = self.preprocess_sequences(df['sequence'])

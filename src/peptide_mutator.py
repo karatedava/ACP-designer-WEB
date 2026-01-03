@@ -2,7 +2,8 @@
 Sampling mutants from large precomputed DB
 """
 
-from src.generators.genGRU import GenGRU
+#from src.generators.genGRU import GenGRU
+from src.utils.gen_esm_embedds import Embedder
 from src.mutators.mut_faiss import MutatorFaiss
 import src.utils.utils_visualization as visualizations
 
@@ -14,13 +15,14 @@ from pathlib import Path
 
 class PeptideMutator():
 
-    def __init__(self, gen_path:Path, db:str = 'acp_mp'):
+    def __init__(self, db:str = 'rnn_acp_mp'):
 
         """
         possible DBs are: [acp_mp / acp / amp]
         """
 
-        self.generator = GenGRU(gen_path)
+        # self.generator = GenGRU(gen_path)
+        self.embedder = Embedder()
 
         df = None
         embeddings = None
@@ -29,9 +31,9 @@ class PeptideMutator():
         
         if pth.exists():
             # load corresponding df
-            df = pd.read_csv(pth / 'DB.csv', index_col=False)
+            df = pd.read_csv(pth / 'DB_filtered.csv', index_col=False)
             # load corresponding embeddings
-            embeddings = np.load(pth / 'embedds.npy', allow_pickle=True)
+            embeddings = np.load(pth / 'esm_embedds_filtered.npy', allow_pickle=True)
         
         dim = embeddings.shape[1]
 
@@ -52,9 +54,11 @@ class PeptideMutator():
 
     def sample_mutants(self, sequence_string:str) -> pd.DataFrame:
 
-        seq_embedded = self.generator.get_embedding_single(sequence_string)
-        seq_embedded = seq_embedded.reshape((1,400))
+        # seq_embedded = self.generator.get_embedding_single(sequence_string)
+        # seq_embedded = seq_embedded.reshape((1,400))
 
-        mut_df = self.mutator.retrive_mutants(og_sequence=seq_embedded,n=5).reset_index()
+        seq_embedded = self.embedder.get_embeddings([sequence_string],bs=1)
+
+        mut_df = self.mutator.retrive_mutants(og_sequence=seq_embedded,n=10).reset_index()
 
         return mut_df

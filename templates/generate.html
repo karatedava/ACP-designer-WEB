@@ -19,6 +19,16 @@
         <form method="POST" action="{{ url_for('generate') }}">
 
         <div class="card">
+            
+            <div class="form-group">
+                <label for="model">generator selection</label>
+                <select name="model" id="model" required>
+                    <option value="rnn-MP.pt">rnn_mp</option>
+                    <option value="progen2-MP">progen_mp</option>
+                    <option value="progen2-ACP">progen_acp</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <label for="device">device selection</label>
                 <select name="device" id="device" required>
@@ -28,16 +38,16 @@
             </div>
 
             <div class="form-group">
-                <label for="nbatches">n_batches</label>
+                <label for="n_sequences">n_sequences</label>
                 <p>controls how many peptides will be generated</p>
                 <div class="slider-container">
-                    <div id="nbatches_slider"></div>
+                    <div id="n_sequences_slider"></div>
                     <div class="slider-values">
                         <span>Min: 1</span>
-                        <span>Current: <output id="nbatches_value">10</output></span>
-                        <span>Max: 100</span>
+                        <span>Current: <output id="n_value"></output></span>
+                        <span>Max: 1000</span>
                     </div>
-                    <input type="hidden" name="nbatches" id="nbatches" value="10">
+                    <input type="hidden" name="n_sequences" id="n_sequences" value="10">
                 </div>
             </div>
         </div>
@@ -48,20 +58,32 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
     <script>
-        // Initialize noUiSlider for batches (single value slider)
-        const nbatchesSlider = document.getElementById('nbatches_slider');
-        noUiSlider.create(nbatchesSlider, {
-            start: [10], // Single handle starting at 10
-            connect: true, // Connect the single handle to the track
-            range: { 'min': 1, 'max': 30 },
+        const nseqSlider = document.getElementById('n_sequences_slider');
+
+        noUiSlider.create(nseqSlider, {
+            start: 10,
+            connect: [true, false],        // Fixed: proper connect for single handle
             step: 1,
-            format: { to: value => Number(value).toFixed(0), from: Number }
+            range: {
+                'min': 1,
+                'max': 1000
+            },
+            format: {
+                to: value => Math.round(value),
+                from: value => Number(value)
+            },
+            ariaLabel: 'Number of sequences to generate',
+            keyboardSupport: true
         });
-        nbatchesSlider.noUiSlider.on('update', function (values, handle) {
-            const singleValue = values[0]; // Single value from the slider
-            document.getElementById('nbatches_value').textContent = singleValue; // Update current value display
-            document.getElementById('nbatches').value = singleValue; // Update hidden input for form
+
+        nseqSlider.noUiSlider.on('update', function (values, handle) {
+            const value = Math.round(values[0]);
+            document.getElementById('n_value').textContent = value;
+            document.getElementById('n_sequences').value = value;
         });
+
+        // Optional: reflect initial value on page load
+        document.getElementById('n_value').textContent = 10;
     </script>
 
 

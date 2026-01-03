@@ -1,18 +1,27 @@
 from src.generators.generator import Generator
 from src.utils.utils_ml import Dataset, collate_fn_no_label, normalize_embeddings
 from torch.utils.data import DataLoader
+from src.config import VOCABULARY_FILE
 from tqdm import tqdm
+import src.utils.utils_ml as ml
 
 import numpy as np
 import pandas as pd
+import torch
+import json
 
 class GenGRU(Generator):
 
     def __init__(self, model_path, batch_size=8):
 
-        super().__init__(model_path)
+        super().__init__()
 
         self.batch_size = batch_size
+
+        # load vocabulary
+        self.vocabulary = self._load_vocabulary_()
+        # load model
+        self.model = torch.load(model_path,weights_only=False)
     
     def generate_sequences(self, n_batches:int=10) -> pd.DataFrame:
         
@@ -69,3 +78,8 @@ class GenGRU(Generator):
         dataloader = DataLoader(dataset, batch_size=bs, shuffle=False, collate_fn=collate_fn_no_label, drop_last=False)
 
         return dataloader
+    
+    def _load_vocabulary_(self):
+
+        with open(VOCABULARY_FILE,'r') as f:
+            return ml.Vocabulary(json.load(f))

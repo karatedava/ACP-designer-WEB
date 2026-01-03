@@ -204,5 +204,18 @@ cython_debug/
 src/deprecated
 
 static/runs/
-testing.ipynb
 src/data/ordered.csv
+notebooks
+src/data/acps
+src/data/mps
+
+optimizer.pt
+scheduler.pt
+rng_state.pth
+scaler.pt
+trainer_state.json
+training_args.bin
+*.safetensors
+.DS_Store
+
+# temporary

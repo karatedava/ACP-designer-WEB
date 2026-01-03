@@ -20,8 +20,10 @@ class Embedder():
         if bs == 0:
             if len(seqs) >= 1000:
                 bs=64
-            if len(seqs) >= 10000:
-                bs=128
+            elif len(seqs) >= 10000:
+                bs=256
+            elif len(seqs) >= 100000:
+                bs=512
             else:
                 bs = 4
 
