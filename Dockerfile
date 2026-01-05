@@ -10,6 +10,8 @@
 
 # CMD ["python3", "app.py"]
 
+### new dockerfile with LFS instalation
+
 FROM python:3.12
 
 # Install Git LFS (using the official packagecloud script for Debian/Ubuntu)
