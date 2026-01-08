@@ -218,4 +218,4 @@ training_args.bin
 # *.safetensors
 .DS_Store
 
-db_prep.py
+./db_prep.py
