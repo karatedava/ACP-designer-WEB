@@ -46,7 +46,6 @@ def generate():
         )
 
         visualizations = ['distribution_toxicity.png','latent_space.png',]
-        visualizations = ['distribution_toxicity.png','latent_space.png',]
 
         return render_template('results.html',
                         run_name = run_name,
