@@ -10,6 +10,11 @@ WORKDIR /app
 
 RUN cd /app && git clone https://github.com/karatedava/ACP-designer-WEB .
 
+# solve the issue with folder perms #
+RUN mkdir -p /app/static/runs && \
+    chmod 775 /app/static/runs && \
+    chmod 775 /app/static
+
 CMD ["python3", "app.py"]
 
 ### ---- new dockerfile with LFS instalation ---- 
