@@ -8,12 +8,12 @@ RUN pip install -r /tmp/requirements.txt
 
 WORKDIR /app
 
-RUN cd /app && git clone https://github.com/karatedava/ACP-designer-WEB .
+RUN git clone https://github.com/karatedava/ACP-designer-WEB .
 
 # solve the issue with folder permissions #
-RUN mkdir -p /app/static/runs/GENERATE && \
-    mkdir -p /app/static/runs/MUTATE && \
-    chmod -R 775 /app/static
+RUN mkdir -p static/runs/GENERATE && \
+    mkdir -p static/runs/MUTATE && \
+    chmod -R 775 static
 
 CMD ["python3", "app.py"]
 
