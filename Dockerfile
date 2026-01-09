@@ -13,7 +13,7 @@ RUN git clone https://github.com/karatedava/ACP-designer-WEB .
 # solve the issue with folder permissions #
 RUN mkdir -p static/runs/GENERATE && \
     mkdir -p static/runs/MUTATE && \
-    chmod -R 775 static
+    chmod -R 777 static
 
 CMD ["python3", "app.py"]
 
