@@ -211,7 +211,6 @@ src/data/mps
 
 # full models
 
-
 optimizer.pt
 scheduler.pt
 rng_state.pth
@@ -224,9 +223,7 @@ training_args.bin
 db_prep.py
 
 # models
-src/data/mut_DBs/progen-acp-mp
-src/data/mut_DBs/progen2-acp
+# src/data/mut_DBs/progen-acp-mp
+# src/data/mut_DBs/progen2-acp
 src/data/known_acps
-
 src/models/generative/progen2-ACP
-src/models/generative/progen2-MP
