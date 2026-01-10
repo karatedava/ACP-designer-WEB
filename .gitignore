@@ -209,6 +209,10 @@ notebooks
 src/data/acps
 src/data/mps
 
+# full models
+src/models/generative/progen2-ACP
+src/models/generative/progen2-MP
+
 optimizer.pt
 scheduler.pt
 rng_state.pth

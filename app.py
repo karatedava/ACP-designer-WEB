@@ -4,6 +4,7 @@ from src.peptide_designer import PeptideDesigner
 from src.peptide_mutator import PeptideMutator
 from src.generators.architectures.architectures import GenRNN
 from src.config import GEN_PATH, CTT_PATH, DIST_DATA_PATH, OUTPUT_DIR, FOLDER_SIGNATURE, DROP_COLS, DEVICE
+from src.utils.utils import get_next_run_id
 
 app = Flask(__name__)
 app.secret_key = "your-secret-key"
@@ -11,10 +12,6 @@ app.secret_key = "your-secret-key"
 @app.route('/')
 def intro():
     return render_template('intro.html')
-
-# @app.route('/generate', methods=['GET','POST'])
-# def generate():
-#     return render_template('intro.html')
 
 @app.route('/generate', methods=['GET','POST'])
 def generate():
@@ -28,7 +25,7 @@ def generate():
         print(generator)
 
         #print(generator)
-        run_id = 420
+        run_id = get_next_run_id(base_dir=OUTPUT_DIR / 'GENERATE')
         run_name = FOLDER_SIGNATURE.replace('XX',str(run_id))
 
         # run pipeline
@@ -67,7 +64,7 @@ def mutate():
 
         print(selected_db)
 
-        run_id = 420
+        run_id = get_next_run_id(base_dir=OUTPUT_DIR / 'MUTATE')
         run_name = FOLDER_SIGNATURE.replace('XX',str(run_id))
 
         mutator = PeptideMutator(
