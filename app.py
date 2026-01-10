@@ -22,7 +22,7 @@ def generate():
         device = request.form.get('device')
         n = int(request.form['n_sequences'])
 
-        print(generator)
+        print('\n',generator,'\n')
 
         #print(generator)
         run_id = get_next_run_id(base_dir=OUTPUT_DIR / 'GENERATE')

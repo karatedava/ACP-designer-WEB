@@ -210,8 +210,7 @@ src/data/acps
 src/data/mps
 
 # full models
-src/models/generative/progen2-ACP
-src/models/generative/progen2-MP
+
 
 optimizer.pt
 scheduler.pt
@@ -222,4 +221,12 @@ training_args.bin
 # *.safetensors
 .DS_Store
 
-./db_prep.py
+db_prep.py
+
+# models
+src/data/mut_DBs/progen-acp-mp
+src/data/mut_DBs/progen2-acp
+src/data/known_acps
+
+src/models/generative/progen2-ACP
+src/models/generative/progen2-MP
