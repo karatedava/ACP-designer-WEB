@@ -171,15 +171,33 @@ button:hover, .download-link:hover, .back-link:hover, .button:hover {
 }
 
 .logo-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    display: flex;              /* ← core magic: puts children side by side */
+    align-items: center;        /* vertically centers both logos */
+    justify-content: center;    /* horizontally centers the whole pair — change to flex-start if you want left-aligned */
+    gap: 24px;                  /* space between logos — adjust 16–40px depending on taste */
+    flex-wrap: wrap;            /* allows stacking on very narrow screens */
+    padding: 16px 0;            /* optional breathing room top/bottom */
 }
 
+/* Make logos behave nicely */
 .logo-container img {
-    max-width: 250px;
-    height: auto;
+    max-height: 160px;           /* ← most important: force similar visual height */
+    width: auto;                /* preserve aspect ratio */
+    display: block;             /* removes unwanted bottom gap */
+    object-fit: contain;        /* keeps whole logo visible even if proportions differ */
+}
+
+/* Responsive: stack on small screens if needed */
+@media (max-width: 500px) {
+    .logo-container {
+        flex-direction: column;     /* ← stack vertically */
+        gap: 16px;
+        align-items: center;
+    }
+    
+    .logo-container img {
+        max-height: 50px;           /* slightly smaller on mobile */
+    }
 }
 
 .intro {

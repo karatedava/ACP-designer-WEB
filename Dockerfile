@@ -15,7 +15,8 @@ RUN mkdir -p static/runs/GENERATE && \
     mkdir -p static/runs/MUTATE && \
     chmod -R 777 static
 
-CMD ["python3", "app.py"]
+CMD ["python", "download_models.py"]
+# CMD ["python3", "app.py"]
 
 ### ---- new dockerfile with LFS instalation ---- 
 

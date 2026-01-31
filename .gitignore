@@ -227,3 +227,5 @@ db_prep.py
 # src/data/mut_DBs/progen2-acp
 src/data/known_acps
 src/models/generative/progen2-ACP
+src/models/generative/progen2-ACP-inference
+src/models/generative/progen2-MP-inference
