@@ -5,7 +5,7 @@ from huggingface_hub import snapshot_download
 
 # ────────────────────────────────────────────────
 MODEL_REPO  = "karatedava/PeogenACP"
-MODEL_LOCAL = "/src/models/generative/progen2-ACP-inference"
+MODEL_LOCAL = "src/models/generative/progen2-ACP-inference"
 # ────────────────────────────────────────────────
 
 local_path = Path(MODEL_LOCAL)
