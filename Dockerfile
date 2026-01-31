@@ -15,6 +15,9 @@ RUN mkdir -p static/runs/GENERATE && \
     mkdir -p static/runs/MUTATE && \
     chmod -R 777 static
 
+RUN mkdir -p src/models/generative/progen2-ACP-inference \
+chmod -R 777 src
+
 CMD ["python", "download_models.py"]
 # CMD ["python3", "app.py"]
 
