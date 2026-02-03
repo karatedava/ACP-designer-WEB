@@ -21,7 +21,7 @@
 
 ### ---- NEW dockerfile ---- 
 
-    FROM python:3.12
+FROM python:3.12
 
 # Install deps as root
 COPY requirements.txt /tmp/

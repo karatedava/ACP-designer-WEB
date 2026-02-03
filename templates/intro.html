@@ -27,10 +27,12 @@
         or contact our research group <a href="https://vacha.ceitec.cz">RoVa group</a>
         </p>
 
-        <hr class="section-divider">
+        <h2>SELECTION MENU:</h2>
 
         <div class="card">
-            <h2>SELECTION MENU:</h2>
+
+            <hr class="section-divider">
+            
             <div class="simulation-option">
                 <h3>Peptide Generation</h3>
                 <p>Design novel peptide sequences</p>
@@ -45,6 +47,16 @@
                     Design mutants of promising sequence
                 </p>
                 <a href="{{ url_for('mutate') }}" class="button">MUTATE !</a>
+            </div>
+
+            <hr class="section-divider">
+
+            <div class="simulation-option">
+                <h3>Toxicity classification</h3>
+                <p>
+                    Find out toxicity of your peptides
+                </p>
+                <a href="{{ url_for('toxicity') }}" class="button">CLASSIFY !</a>
             </div>
     </div>
 

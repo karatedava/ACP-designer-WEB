@@ -2,9 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for, flash, sen
 
 from src.peptide_designer import PeptideDesigner
 from src.peptide_mutator import PeptideMutator
+from src.filters.f_cytotox import CytotoxicityFilter
+import src.utils.utils_visualization as visualizations
 from src.generators.architectures.architectures import GenRNN
 from src.config import GEN_PATH, CTT_PATH, DIST_DATA_PATH, OUTPUT_DIR, FOLDER_SIGNATURE, DROP_COLS, DEVICE
 from src.utils.utils import get_next_run_id
+
+import pandas as pd
 
 app = Flask(__name__)
 app.secret_key = "your-secret-key"
@@ -86,6 +90,48 @@ def mutate():
         )
 
     return render_template('mutate.html')
+
+@app.route('/toxicity', methods=['GET','POST'])
+def toxicity():
+    if request.method == 'POST':
+
+        if 'sequence_file' not in request.files:
+            return "No file uploaded", 400
+        
+        file = request.files['sequence_file']
+        device = request.form.get('device')
+
+        try:
+            # read directly from the file stream
+            df = pd.read_csv(file)
+
+            run_id = get_next_run_id(base_dir=OUTPUT_DIR / 'TOXICITY')
+            run_name = FOLDER_SIGNATURE.replace('XX',str(run_id))
+
+            clf = CytotoxicityFilter(CTT_PATH, device)
+            output_folder = OUTPUT_DIR / 'TOXICITY' / run_name
+
+            df_filtered = clf.filter_sequences(df)
+
+                    # save general results 
+            output_folder.mkdir(parents=True, exist_ok=True)
+            visualizations.probability_distribution(df['toxicity_prob'], output_folder, col='red', name='toxicity')
+            df.to_csv(output_folder / 'predictions.csv',index=False)
+
+            vis = ['distribution_toxicity.png']
+
+            return render_template('results.html',
+                    run_name = run_name,
+                    output_dir=output_folder, 
+                    visualizations = vis,
+                    results_file='predictions.csv'
+            )
+
+        except Exception as e:
+            return f"Error reading CSV: {str(e)}", 400
+
+    return render_template('toxicity.html')
+
 
 @app.route('/<path:filename>')
 def download_file(filename):
