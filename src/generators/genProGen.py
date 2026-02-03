@@ -15,7 +15,7 @@ class GenProGen(Generator):
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 
         # List of non-standard/ambiguous tokens to ban
-        non_standard = ['O', 'U', 'B', 'Z', 'J']  # Add 'X' here if needed
+        non_standard = ['O', 'U', 'B', 'Z', 'J', '1', 'X']  # Add 'X' here if needed
 
         bad_tokens = []
         for aa in non_standard:
@@ -67,6 +67,8 @@ class GenProGen(Generator):
             protein = self.tokenizer.decode(seq, skip_special_tokens=True)[:-1]
             if '2' in protein:
                 protein = protein[:protein.index('2')]
+            if '1' in protein:
+                continue
             if 'X' in protein:
                 protein = protein[:protein.index('X')]
             sequences.append(protein)
