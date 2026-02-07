@@ -16,14 +16,25 @@
             Page dedicated to ACP sequence generation.
             Select a generative model and number of sequences to generate.
             Outputs generated sequences with cytotoxicity labels.
-
-            ! Please note that in the MASTER THESIS, 'rnn_mp' GENERATIVE MODEL was used !
-            Other models were added later and not properly tested
         </p>
+
+
+        <div class="model-info-box">
+            <p><strong>Important note:</strong> In the MASTER THESIS, <strong>rnn_mp</strong> model was used and evaluated.<br>
+            Other models were added later and have not been thoroughly tested</p>
+
+            <h4>Available generative models:</h4>
+            <ul class="model-list">
+                <li><strong>rnn_mp</strong> — main model used in the thesis, able to design experimentally validated ACPs</li>
+                <li><strong>progen_mp</strong> — large transformer model fine-tuned on MPs</li>
+                <li><strong>progen_acp</strong> — large transformer model fine-tuned on ACPs only</li>
+            </ul>
+        </div>
+
         <a href="{{ url_for('intro') }}" class="back-link">Back to Intro</a>
 
         <hr class="section-divider">
-        <form method="POST" action="{{ url_for('generate') }}">
+        <form method="POST" action="{{ url_for('generate')}}">
 
         <div class="card">
             

@@ -2,6 +2,7 @@ import torch
 import numpy as np
 from transformers import EsmModel, AutoTokenizer
 from tqdm import tqdm
+from typing import List
 
 class Embedder():
 
@@ -15,7 +16,7 @@ class Embedder():
         self.model = model.half()
     
     @torch.no_grad
-    def get_embeddings(self, seqs:np.array, maxlen:int=50, bs:int = 0) -> np.array:
+    def get_embeddings(self, seqs:List[str], maxlen:int=50, bs:int = 0) -> np.array:
         
         if bs == 0:
             if len(seqs) >= 1000:

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACP designer - Web-based Implementation V1.1</title>
+    <title>ACP designer - Web-based Implementation V{{ app_version }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Urbanist:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
@@ -14,7 +14,7 @@
             <img src="{{ url_for('static', filename='graphics/ACP_designer_logo.png') }}" alt="ACP-designer logo">
             <img src="{{ url_for('static', filename='graphics/RoVa_logo.png') }}" alt="RoVa logo">
         </div>
-        <h1 class="intro-title">Welcome to ACP Designer - V1.1</h1>
+        <h1 class="intro-title">Welcome to ACP Designer - V{{ app_version }}</h1>
         <div class="intro-subtitle">
             Toolbox for the design of novel therapeutic peptides. It features:
             <ul>

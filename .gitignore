@@ -226,6 +226,9 @@ db_prep.py
 # src/data/mut_DBs/progen-acp-mp
 # src/data/mut_DBs/progen2-acp
 src/data/known_acps
+src/data/mut_DBs/progen-acp-mp/DB_filtered_all.csv
+src/data/mut_DBs/progen-acp-mp/DB_filtered_f0.5.csv
+src/data/mut_DBs/progen-acp-mp/esm_embedds_filtered_ALL.npy
 src/models/generative/progen2-ACP
 src/models/generative/progen2-ACP-inference
 src/models/generative/progen2-MP-inference

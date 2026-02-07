@@ -20,7 +20,7 @@
         <a href="{{ url_for('intro') }}" class="back-link">Back to Intro</a>
 
         <hr class="section-divider">
-        <form method="POST" action="{{ url_for('mutate') }}">
+        <form method="POST" action="{{ url_for('mutate') }}" enctype="multipart/form-data">
 
         <div class="card">
 
@@ -50,6 +50,25 @@
                     <option value="progen-acp-mp">progen_mp_db</option>
                     <!-- <option value="progen2-acp">progen_acp_db</option> -->
                 </select>
+            </div>
+
+            <p class="text-muted">
+                Or <strong>upload own database</strong> a CSV file containing protein sequences 
+                <small>(one sequence per row)</small>
+            </p>
+
+            <!-- File input -->
+            <div class="custom-file">
+                <input 
+                    type="file"
+                    class="custom-file-input" 
+                    id="DBfile" 
+                    name="DB_file"
+                    accept=".csv"
+                >
+                <label class="custom-file-label" for="DB_file">
+                    Choose CSV file...
+                </label>
             </div>
 
         </div>

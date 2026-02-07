@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory, session
+from authlib.integrations.flask_client import OAuth
+from dotenv import load_dotenv
 
 from src.peptide_designer import PeptideDesigner
 from src.peptide_mutator import PeptideMutator
@@ -9,13 +11,65 @@ from src.config import GEN_PATH, CTT_PATH, DIST_DATA_PATH, OUTPUT_DIR, FOLDER_SI
 from src.utils.utils import get_next_run_id
 
 import pandas as pd
+import os
+
+from __version__ import __version__
 
 app = Flask(__name__)
 app.secret_key = "your-secret-key"
 
+@app.context_processor
+def inject_version():
+    return dict(app_version=app.config['APP_VERSION'])
+
+app.config['APP_VERSION'] = __version__
+
+### --authentication-- ###
+# oauth = OAuth(app)
+
+# muni = oauth.register(
+#     name='muni',
+#     client_id=os.getenv('MUNI_CLIENT_ID'),          # ← from registration
+#     client_secret=os.getenv('MUNI_CLIENT_SECRET'),  # ← from registration
+#     server_metadata_url='https://login.muni.cz/oidc/.well-known/openid-configuration',  # confirm exact URL!
+#     client_kwargs={
+#         'scope': 'openid profile email',            # add 'offline_access' if you want refresh tokens
+#         'prompt': 'select_account',                 # optional: force account selection
+#     }
+# )
+
 @app.route('/')
 def intro():
+    # user = session.get('user')
+    # if user:
+    #     return f"""
+    #     <h1>Welcome, {user.get('name', 'MUNI user')}!</h1>
+    #     <p>Email: {user.get('email')}</p>
+    #     <p>UČO / sub: {user.get('sub')}</p>
+    #     <a href="/logout">Logout</a>
+    #     """
     return render_template('intro.html')
+
+# @app.route('/login')
+# def login():
+#     redirect_uri = url_for('auth_callback', _external=True)
+#     return muni.authorize_redirect(redirect_uri)
+
+# @app.route('/auth/callback')
+# def auth_callback():
+#     token = muni.authorize_access_token()
+    
+#     # Get user info (automatic via OIDC userinfo endpoint)
+#     userinfo = muni.userinfo(token=token)
+    
+#     # Store in session (you can also save to DB + use flask-login)
+#     session['user'] = userinfo
+#     session['token'] = token  # access_token, id_token, refresh_token...
+
+#     return redirect(url_for('index'))
+
+
+### --logic-- ###
 
 @app.route('/generate', methods=['GET','POST'])
 def generate():
@@ -64,9 +118,14 @@ def mutate():
     if request.method == 'POST':
         
         target_sequence = request.form.get('sequence')
-        selected_db = request.form.get('database')
+        selected_db_file = request.files.get('DB_file')
 
-        print(selected_db)
+        if selected_db_file is None or selected_db_file.filename == '':
+            selected_db = request.form.get('database')
+        else:
+            print('DB uploaded')
+            selected_db_file = request.files['DB_file']
+            selected_db = pd.read_csv(selected_db_file)
 
         run_id = get_next_run_id(base_dir=OUTPUT_DIR / 'MUTATE')
         run_name = FOLDER_SIGNATURE.replace('XX',str(run_id))
@@ -83,9 +142,9 @@ def mutate():
         visualizations = ['distribution_toxicity.png','distribution_charge.png']
 
         return render_template('results.html',
-                run_name = run_name,
+                run_name=run_name,
                 output_dir=output_folder, 
-                visualizations = visualizations,
+                visualizations=visualizations,
                 results_file='mutants.csv'
         )
 

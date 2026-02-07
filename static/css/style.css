@@ -271,3 +271,44 @@ button:hover, .download-link:hover, .back-link:hover, .button:hover {
         top: -4px;
     }
 }
+
+
+.model-info-box {
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    max-width: 720px;
+}
+
+.model-info-box h4 {
+    margin: 0 0 0.9rem 0;
+    color: #2d3748;
+    font-size: 1.1rem;
+}
+
+.model-list {
+    margin: 0;
+    padding-left: 1.4rem;
+    list-style: none;
+}
+
+.model-list li {
+    margin-bottom: 0.55rem;
+    color: #4a5568;
+}
+
+.model-list strong {
+    color: #2d3748;
+    font-weight: 600;
+}
+
+/* Optional: nicer bullet points */
+.model-list li::before {
+    content: "→";
+    margin-left: -1.4rem;
+    margin-right: 0.6rem;
+    color: #667eea;
+    font-weight: bold;
+}

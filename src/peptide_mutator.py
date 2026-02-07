@@ -12,10 +12,11 @@ from src.config import MUT_DB_PATH
 import pandas as pd
 import numpy as np
 from pathlib import Path
+from typing import Union
 
 class PeptideMutator():
 
-    def __init__(self, db:str = 'rnn_acp_mp'):
+    def __init__(self, db: Union[str, pd.DataFrame] = 'rnn_acp_mp'):
 
         """
         possible DBs are: [acp_mp / acp / amp]
@@ -27,13 +28,33 @@ class PeptideMutator():
         df = None
         embeddings = None
 
-        pth = MUT_DB_PATH / db
+        if isinstance(db, pd.DataFrame):
+            df = db.copy()
+            embeddings = self.embedder.get_embeddings(df['sequence'].to_list())
+        elif isinstance(db, str):
+            pth = MUT_DB_PATH / db
+            
+            if pth.exists() and (pth / 'DB_filtered.csv').exists():
+                try:
+                    df = pd.read_csv(
+                        pth / 'DB_filtered.csv',
+                        index_col=False,
+                    )
+
+                    embeddings = np.load(pth / 'esm_embedds_filtered.npy', allow_pickle=True)
+
+                except Exception as e:
+                    raise ValueError(f"Failed to load CSV from {pth}/DB_filtered.csv: {e}")
+            else:
+                raise FileNotFoundError(
+                    f"Database folder not found or missing DB_filtered.csv: {pth}"
+                )
         
-        if pth.exists():
-            # load corresponding df
-            df = pd.read_csv(pth / 'DB_filtered.csv', index_col=False)
-            # load corresponding embeddings
-            embeddings = np.load(pth / 'esm_embedds_filtered.npy', allow_pickle=True)
+        else:
+            raise TypeError(
+                f"db must be either str (database name) or pd.DataFrame. "
+                f"Got: {type(db).__name__}"
+            )
         
         dim = embeddings.shape[1]
 
@@ -46,9 +67,10 @@ class PeptideMutator():
         # save results + visualizations
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        visualizations.probability_distribution(mut_df['toxicity_prob'], output_dir, col='red', name='toxicity')
-        visualizations.probability_distribution(mut_df['d_charge'], output_dir, col='blue', name='charge')
-        #visualizations.latent_space_plot(self.generator.get_embeddings(df),df['toxicity_cat'], output_dir)
+        if 'toxicity_prob' in mut_df.columns:
+            visualizations.probability_distribution(mut_df['toxicity_prob'], output_dir, col='red', name='toxicity')
+        if 'd_charge' in mut_df.columns:
+            visualizations.probability_distribution(mut_df['d_charge'], output_dir, col='blue', name='charge')
 
         mut_df.to_csv(output_dir / 'mutants.csv',index=False)
 
