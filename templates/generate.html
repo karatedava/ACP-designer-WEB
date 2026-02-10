@@ -61,11 +61,11 @@
                 <div class="slider-container">
                     <div id="n_sequences_slider"></div>
                     <div class="slider-values">
-                        <span>Min: 1</span>
+                        <span>Min: 10</span>
                         <span>Current: <output id="n_value"></output></span>
-                        <span>Max: 1000</span>
+                        <span>Max: 100</span>
                     </div>
-                    <input type="hidden" name="n_sequences" id="n_sequences" value="10">
+                    <input type="hidden" name="n_sequences" id="n_sequences" value="20">
                 </div>
             </div>
         </div>
@@ -79,12 +79,12 @@
         const nseqSlider = document.getElementById('n_sequences_slider');
 
         noUiSlider.create(nseqSlider, {
-            start: 10,
+            start: 20,
             connect: [true, false],        // Fixed: proper connect for single handle
             step: 1,
             range: {
-                'min': 1,
-                'max': 1000
+                'min': 10,
+                'max': 100
             },
             format: {
                 to: value => Math.round(value),
@@ -101,7 +101,7 @@
         });
 
         // Optional: reflect initial value on page load
-        document.getElementById('n_value').textContent = 10;
+        document.getElementById('n_value').textContent = 20;
     </script>
 
 
