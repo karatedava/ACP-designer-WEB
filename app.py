@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory, session
-from authlib.integrations.flask_client import OAuth
-from dotenv import load_dotenv
+
+### later for authentication purposes
+# from authlib.integrations.flask_client import OAuth
+# from dotenv import load_dotenv
 
 from src.peptide_designer import PeptideDesigner
 from src.peptide_mutator import PeptideMutator
